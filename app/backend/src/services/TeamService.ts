@@ -1,5 +1,5 @@
 import TeamModel from '../models/TeamsModel';
-import { ITeams } from '../Interfaces/Teams.interface';
+import ITeams from '../Interfaces/Teams.interface';
 import { ITeamModel } from '../Interfaces/TeamModel.interface';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
 

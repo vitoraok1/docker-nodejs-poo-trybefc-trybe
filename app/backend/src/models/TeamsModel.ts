@@ -1,5 +1,5 @@
 import Teams from '../database/models/Teams';
-import { ITeams } from '../Interfaces/Teams.interface';
+import ITeams from '../Interfaces/Teams.interface';
 
 export default class TeamsModel {
   private model = Teams;
