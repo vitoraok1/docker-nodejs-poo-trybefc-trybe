@@ -1,3 +1,11 @@
+interface IHomeTeam {
+  teamName: string;
+}
+
+interface IAwayTeam {
+  teamName: string;
+}
+
 export default interface IMatches {
   id: number;
   homeTeamId: number;
@@ -5,4 +13,6 @@ export default interface IMatches {
   awayTeamId: number;
   awayTeamGoals: number;
   inProgress: boolean;
+  homeTeam?: IHomeTeam;
+  awayTeam?: IAwayTeam;
 }
