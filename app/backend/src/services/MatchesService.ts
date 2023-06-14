@@ -16,4 +16,9 @@ export default class MatchesService {
     const allMatches = await this.matchesModel.findAll();
     return allMatches;
   }
+
+  public async finishMatch(id: number) {
+    const match = await this.matchesModel.finishMatch(id);
+    return { message: 'Finished', data: match };
+  }
 }

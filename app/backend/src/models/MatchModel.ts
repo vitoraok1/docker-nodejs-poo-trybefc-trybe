@@ -22,4 +22,12 @@ export default class MatchModel {
     });
     return dbData;
   }
+
+  async finishMatch(id: number) {
+    const matchUpdated = await this.model.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+    return matchUpdated;
+  }
 }
