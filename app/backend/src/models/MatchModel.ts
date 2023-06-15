@@ -36,4 +36,20 @@ export default class MatchModel {
     const matchUpdated = await this.model.update({ ...body }, { where: { id } });
     return matchUpdated;
   }
+
+  async registerNewMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ) {
+    const newMatch = await this.model.create({
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+      inProgress: true,
+    });
+    return newMatch;
+  }
 }

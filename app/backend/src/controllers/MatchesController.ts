@@ -24,4 +24,12 @@ export default class MatchesController {
     const match = await this.matchesService.updateMatch(Number(id), req.body);
     return res.status(200).json(match.message);
   }
+
+  public async registerNewMatch(req: Request, res: Response) {
+    const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+
+    const match = await this.matchesService
+      .registerNewMatch(homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals);
+    return res.status(201).json(match.data);
+  }
 }

@@ -27,4 +27,15 @@ export default class MatchesService {
     const updatedMatch = await this.matchesModel.updateMatch(id, body);
     return { message: 'Updated', data: updatedMatch };
   }
+
+  public async registerNewMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ) {
+    const newMatch = await this.matchesModel
+      .registerNewMatch(homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals);
+    return { message: 'Created', data: newMatch };
+  }
 }
