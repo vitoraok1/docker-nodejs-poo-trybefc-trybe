@@ -1,3 +1,4 @@
+import IUpdateMatch from '../Interfaces/UpdateMatchs.interface';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
 import IMatches from '../Interfaces/Matches.interface';
@@ -28,6 +29,11 @@ export default class MatchModel {
       { inProgress: false },
       { where: { id } },
     );
+    return matchUpdated;
+  }
+
+  async updateMatch(id: number, body: IUpdateMatch) {
+    const matchUpdated = await this.model.update({ ...body }, { where: { id } });
     return matchUpdated;
   }
 }

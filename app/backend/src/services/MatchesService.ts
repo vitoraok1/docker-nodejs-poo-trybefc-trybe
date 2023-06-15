@@ -1,5 +1,6 @@
 import MatchModel from '../models/MatchModel';
 import IMatches from '../Interfaces/Matches.interface';
+import IUpdateMatch from '../Interfaces/UpdateMatchs.interface';
 
 export default class MatchesService {
   constructor(
@@ -20,5 +21,10 @@ export default class MatchesService {
   public async finishMatch(id: number) {
     const match = await this.matchesModel.finishMatch(id);
     return { message: 'Finished', data: match };
+  }
+
+  public async updateMatch(id: number, body:IUpdateMatch) {
+    const updatedMatch = await this.matchesModel.updateMatch(id, body);
+    return { message: 'Updated', data: updatedMatch };
   }
 }
