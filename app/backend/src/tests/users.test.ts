@@ -10,6 +10,9 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
+import UserModel from '../database/models/Users';
+import { userRegistered, validLogin } from './mocks/usersMock';
+
 describe('Login tests', function () {
   it('Should return an error message if there is no email or password field', async function () {
     const response = await chai.request(app)
@@ -55,6 +58,17 @@ describe('Login tests', function () {
     expect(response.status).to.be.equal(401);
     expect(response.body).to.have.property("message", 'Invalid email or password');
   });
+
+  // it('Should return a token if the email and password are in database  ', async function () {
+  //   const userMock = UserModel.build(userRegistered)
+  //   sinon.stub(UserModel, 'findOne').resolves(userMock);
+  //   const response = await chai.request(app)
+  //     .post('/login')
+  //     .send(validLogin)
+
+  //   expect(response.status).to.be.equal(200);
+  //   expect(response.body.token).not.to.be.undefined;
+  // });
 
   afterEach(sinon.restore);
 });
