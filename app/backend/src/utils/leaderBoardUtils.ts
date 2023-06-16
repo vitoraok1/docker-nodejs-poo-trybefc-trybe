@@ -1,3 +1,5 @@
+import { ILeaderBoard } from '../Interfaces/LeaderBoard.interface';
+
 type IMatches = {
   homeTeamGoals: number;
   awayTeamGoals: number;
@@ -12,6 +14,8 @@ const teams = {
   totalLosses: 0,
   goalsFavor: 0,
   goalsOwn: 0,
+  goalsBalance: 0,
+  efficiency: 0,
 };
 
 const renewTeams = () => {
@@ -22,6 +26,8 @@ const renewTeams = () => {
   teams.totalLosses = 0;
   teams.goalsFavor = 0;
   teams.goalsOwn = 0;
+  teams.goalsBalance = 0;
+  teams.efficiency = 0;
 };
 
 const homeVictory = (homeTeamGoals:number, awayTeamGoals:number) => {
@@ -91,6 +97,11 @@ const teamsHome = (name:string, matches:IMatches[]) => {
   pointsHome(matches);
   teams.totalGames += 1;
 
+  teams.goalsBalance = teams.goalsFavor - teams.goalsOwn;
+  teams.efficiency = Number(
+    ((teams.totalPoints / (teams.totalGames * 3)) * 100).toFixed(2),
+  );
+
   return teams;
 };
 
@@ -102,10 +113,33 @@ const teamsAway = (name:string, matches:IMatches[]) => {
   pointsAway(matches);
   teams.totalGames += 1;
 
+  teams.goalsBalance = teams.goalsFavor - teams.goalsOwn;
+  teams.efficiency = Number(
+    ((teams.totalPoints / (teams.totalGames * 3)) * 100).toFixed(2),
+  );
+
   return teams;
 };
+
+const teamsClassified = (matches: ILeaderBoard[]) =>
+  matches.sort((teamA, teamB) => {
+    if (teamB.totalPoints !== teamA.totalPoints) {
+      return teamB.totalPoints - teamA.totalPoints;
+    }
+    if (teamB.totalVictories !== teamA.totalVictories) {
+      return teamB.totalVictories - teamA.totalVictories;
+    }
+    if (teamB.goalsBalance !== teamA.goalsBalance) {
+      return teamB.goalsBalance - teamA.goalsBalance;
+    }
+    if (teamB.goalsFavor !== teamA.goalsFavor) {
+      return teamB.goalsFavor - teamA.goalsFavor;
+    }
+    return teamB.goalsOwn - teamA.goalsFavor;
+  });
 
 export {
   teamsHome,
   teamsAway,
+  teamsClassified,
 };

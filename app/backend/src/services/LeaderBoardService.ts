@@ -1,7 +1,7 @@
 import Matches from '../database/models/Matches';
 import TeamModel from '../database/models/Teams';
 import ITeam from '../Interfaces/Teams.interface';
-import { teamsHome, teamsAway } from '../utils/leaderBoardUtils';
+import { teamsHome, teamsAway, teamsClassified } from '../utils/leaderBoardUtils';
 
 export default class LeaderBoardService {
   static async leaderBoard() {
@@ -20,26 +20,26 @@ export default class LeaderBoardService {
     });
 
     const results = await Promise.all(homeTeams);
-    return results;
+    const classifiedTeams = teamsClassified(results);
+    return classifiedTeams;
   }
 
   static async leaderBoardAway() {
     const teams = await TeamModel.findAll() as ITeam[];
 
-    const teamsVisitingStats = await Promise.all(
-      teams.map(async (team) => {
-        const awayGames = await Matches.findAll({
-          where: { awayTeamId: team.id, inProgress: false },
-        });
+    const awayTeams = await teams.map(async (team) => {
+      const awayGames = await Matches.findAll({
+        where: { awayTeamId: team.id, inProgress: false },
+      });
 
-        const teamAwayStats = await Promise.all(
-          awayGames.map((match) => teamsAway(team.teamName, [match])),
-        );
+      const awayStatistics = await awayGames.map((match) =>
+        teamsAway(team.teamName, [match]));
 
-        const teamsStats = teamAwayStats[awayGames.length - 1];
-        return { ...teamsStats };
-      }),
-    );
-    return teamsVisitingStats;
+      const statisticsTeams = awayStatistics[awayGames.length - 1];
+      return { ...statisticsTeams };
+    });
+    const results = await Promise.all(awayTeams);
+    const classifiedTeams = teamsClassified(results);
+    return classifiedTeams;
   }
 }
