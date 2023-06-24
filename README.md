@@ -2,7 +2,7 @@
   <h2 align="center">Tryber Football Club</h2>
   <br/>
   <p align="center">
-    An application of a football championship with leaderboard, using TypeScript, Docker, NodeJS, POO, MySQL and Sequelize.
+    An application of a football championship with leaderboard, using TypeScript, Docker, NodeJS, MySQL and Sequelize.
     <br/>
      <br/>
      <br/>
